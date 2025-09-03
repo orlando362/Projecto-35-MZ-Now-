@@ -1,9 +1,20 @@
-Meu Site de Notícias
+# MZ Agora - Notícias de Moçambique
 
-Este é um site de notícias sobre Moçambique.
+Site de notícias sobre Moçambique, trazendo as últimas novidades de política, economia, desporto e mais.
 
-Como usar
-Basta abrir o arquivo index.html no navegador
+# Como visualizar o site
 
-Contato
-Email: orlandosiueta@gmail.com 
+1. Acesse: https://orlando362.github.io/Projeto-35-MZ-Agora/
+2. Ou baixe os arquivos e abra `index.html` no seu navegador
+
+# Tecnologias utilizadas
+
+- HTML5
+- CSS3 
+- JavaScript
+- GitHub Pages
+
+# Desenvolvido por
+
+[OrlandoMoisésSiueta]
+Email: siuetaorlandomoises@gmail.com 
