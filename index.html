@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="pt-MZ">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MZ Now - Notícias de Moçambique em Tempo Real</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0066cc;
+            --secondary: #ff9900;
+            --dark: #333;
+            --light: #f8f9fa;
+            --danger: #dc3545;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            margin-left: 10px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        nav ul li a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Breaking News */
+        .breaking-news {
+            background: var(--danger);
+            color: white;
+            padding: 10px 0;
+            overflow: hidden;
+        }
+
+        .breaking-news-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .breaking-news-label {
+            background: var(--dark);
+            padding: 5px 15px;
+            margin-right: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .breaking-news-ticker {
+            white-space: nowrap;
+            animation: ticker 30s linear infinite;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        /* News Cards */
+        .news-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--primary);
+            display: inline-block;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .news-card-image {
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .news-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .news-card:hover .news-card-image img {
+            transform: scale(1.05);
+        }
+
+        .news-card-content {
+            padding: 20px;
+        }
+
+        .news-category {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+
+        .news-card-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .news-card-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #777;
+            font-size: 0.9rem;
+            margin-top: 15px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-section {
+            margin-bottom: 30px;
+        }
+
+        .sidebar-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--secondary);
+        }
+
+        .trending-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .trending-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .trending-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary);
+            margin-right: 15px;
+            min-width: 30px;
+        }
+
+        .trending-content h4 {
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+
+        .trending-content p {
+            font-size: 0.85rem;
+            color: #777;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .newsletter h3 {
+            margin-bottom: 15px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            margin-top: 15px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .newsletter-form button {
+            background: var(--dark);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .newsletter-form button:hover {
+            background: #222;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            color: var(--secondary);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--secondary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* Admin Button */
+        .admin-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            z-index: 1000;
+            transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .admin-btn:hover {
+            background: rgba(0, 0, 0, 0.9);
+            transform: scale(1.1);
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .admin-container {
+            background: white;
+            width: 90%;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .admin-header h2 {
+            color: var(--primary);
+        }
+
+        .close-admin {
+            background: var(--danger);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .close-admin:hover {
+            background: #c82333;
+        }
+
+        .admin-tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .admin-tab {
+            padding: 12px 25px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #777;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .admin-tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .admin-tab:hover {
+            color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #0052a3;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .news-list {
+            margin-top: 25px;
+        }
+
+        .news-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-item-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .news-item-info p {
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        .news-item-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Ad Spaces */
+        .ad-banner {
+            background: #f0f0f0;
+            border: 1px dashed #ccc;
+            text-align: center;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+            color: #777;
+        }
+
+        .ad-sidebar {
+            background: #f0f0f0;
+            border: 1px dashed #ccc;
+            text-align: center;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            color: #777;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px;
+            }
+            
+            .breaking-news-content {
+                flex-direction: column;
+            }
+            
+            .breaking-news-label {
+                margin-right: 0;
+                margin-bottom: 10px;
+                align-self: flex-start;
+            }
+            
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .admin-container {
+                width: 95%;
+                margin: 20px auto;
+                padding: 20px;
+            }
+            
+            .admin-tabs {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .admin-tab {
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-newspaper"></i>
+                    <h1>MZ Now</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-home"></i> Início</a></li>
+                        <li><a href="#">Política</a></li>
+                        <li><a href="#">Economia</a></li>
+                        <li><a href="#">Desporto</a></li>
+                        <li><a href="#">Entretenimento</a></li>
+                        <li><a href="#">Tecnologia</a></li>
+                        <li><a href="#">Saúde</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breaking News -->
+    <div class="breaking-news">
+        <div class="container">
+            <div class="breaking-news-content">
+                <div class="breaking-news-label">Última Hora</div>
+                <div class="breaking-news-ticker">
+                    Governo anuncia novo pacote de medidas económicas para estimular o crescimento • Moçambique recebe prémio internacional de turismo • Seleção nacional prepara-se para jogo decisivo • Nova tecnologia revoluciona agricultura no país
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Main News Section -->
+            <div class="main-news">
+                <!-- Ad Banner -->
+                <div class="ad-banner">
+                    <p>Espaço para Anúncio Google AdSense (728x90)</p>
+                </div>
+
+                <!-- Latest News -->
+                <div class="news-section">
+                    <h2 class="section-title">Últimas Notícias</h2>
+                    <div class="news-grid">
+                        <div class="news-card">
+                            <div class="news-card-image">
+                                <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Notícia 1">
+                            </div>
+                            <div class="news-card-content">
+                                <span class="news-category">Política</span>
+                                <h3 class="news-card-title">Governo apresenta novo plano de desenvolvimento económico para 2024</h3>
+                                <p>O Presidente da República anunciou hoje um ambicioso plano de desenvolvimento económico focado na diversificação da economia e criação de empregos...</p>
+                                <div class="news-card-meta">
+                                    <span><i class="far fa-clock"></i> 2 horas atrás</span>
+                                    <span><i class="far fa-comment"></i> 24</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="news-card">
+                            <div class="news-card-image">
+                                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Notícia 2">
+                            </div>
+                            <div class="news-card-content">
+                                <span class="news-category">Economia</span>
+                                <h3 class="news-card-title">Moçambique registou crescimento de 5.2% no último trimestre</h3>
+                                <p>Segundo dados do Instituto Nacional de Estatística, a economia moçambicana cresceu 5.2% no último trimestre, superando as expectativas...</p>
+                                <div class="news-card-meta">
+                                    <span><i class="far fa-clock"></i> 4 horas atrás</span>
+                                    <span><i class="far fa-comment"></i> 18</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="news-card">
+                            <div class="news-card-image">
+                                <img src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Notícia 3">
+                            </div>
+                            <div class="news-card-content">
+                                <span class="news-category">Desporto</span>
+                                <h3 class="news-card-title">Seleção nacional vence jogo de preparação para o CAN</h3>
+                                <p>A seleção moçambicana de futebol venceu hoje por 2-1 a seleção da Zâmbia num jogo de preparação para o Campeonato Africano das Nações...</p>
+                                <div class="news-card-meta">
+                                    <span><i class="far fa-clock"></i> 6 horas atrás</span>
+                                    <span><i class="far fa-comment"></i> 32</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="news-card">
+                            <div class="news-card-image">
+                                <img src="https://images.unsplash.com/photo-1542856391-010fb87dcfed?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Notícia 4">
+                            </div>
+                            <div class="news-card-content">
+                                <span class="news-category">Tecnologia</span>
+                                <h3 class="news-card-title">Startup moçambicana lança aplicativo para agricultores</h3>
+                                <p>Uma startup de Maputo lançou hoje um aplicativo móvel que ajuda agricultores a monitorizar as suas colheitas e aceder a informações sobre o mercado...</p>
+                                <div class="news-card-meta">
+                                    <span><i class="far fa-clock"></i> 8 horas atrás</span>
+                                    <span><i class="far fa-comment"></i> 15</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="news-card">
+                            <div class="news-card-image">
+                                <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Notícia 5">
+                            </div>
+                            <div class="news-card-content">
+                                <span class="news-category">Saúde</span>
+                                <h3 class="news-card-title">Campanha de vacinação contra malária atinge 80% da população</h3>
+                                <p>O Ministério da Saúde anunciou hoje que a campanha nacional de vacinação contra a malária já atingiu 80% da população-alvo...</p>
+                                <div class="news-card-meta">
+                                    <span><i class="far fa-clock"></i> 10 horas atrás</span>
+                                    <span><i class="far fa-comment"></i> 21</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="news-card">
+                            <div class="news-card-image">
+                                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Notícia 6">
+                            </div>
+                            <div class="news-card-content">
+                                <span class="news-category">Entretenimento</span>
+                                <h3 class="news-card-title">Festival de música de Maputo atrai artistas internacionais</h3>
+                                <p>A edição deste ano do Festival Internacional de Música de Maputo contará com a presença de artistas de renome mundial...</p>
+                                <div class="news-card-meta">
+                                    <span><i class="far fa-clock"></i> 12 horas atrás</span>
+                                    <span><i class="far fa-comment"></i> 27</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- More News -->
+                <div class="news-section">
+                    <h2 class="section-title">Mais Notícias</h2>
+                    <div class="news-grid">
+                        <div class="news-card">
+                            <div class="news-card-image">
+                                <img src="https://images.unsplash.com/photo-1507676184212-d03ab07a8929?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Notícia 7">
+                            </div>
+                            <div class="news-card-content">
+                                <span class="news-category">Educação</span>
+                                <h3 class="news-card-title">Governo anuncia construção de 50 novas escolas</h3>
+                                <p>O Ministério da Educação anunciou hoje um plano para construir 50 novas escolas em todo o país nos próximos dois anos...</p>
+                                <div class="news-card-meta">
+                                    <span><i class="far fa-clock"></i> 1 dia atrás</span>
+                                    <span><i class="far fa-comment"></i> 19</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="news-card">
+                            <div class="news-card-image">
+                                <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Notícia 8">
+                            </div>
+                            <div class="news-card-content">
+                                <span class="news-category">Ambiente</span>
+                                <h3 class="news-card-title">Projeto de reflorestamento atinge meta de 1 milhão de árvores</h3>
+                                <p>Um projeto nacional de reflorestamento anunciou hoje ter atingido a meta de plantar 1 milhão de árvores em todo o país...</p>
+                                <div class="news-card-meta">
+                                    <span><i class="far fa-clock"></i> 1 dia atrás</span>
+                                    <span><i class="far fa-comment"></i> 14</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Ad Space -->
+                <div class="ad-sidebar">
+                    <p>Espaço para Anúncio Google AdSense (300x250)</p>
+                </div>
+
+                <!-- Trending News -->
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Notícias em Destaque</h3>
+                    <div class="trending-item">
+                        <div class="trending-number">1</div>
+                        <div class="trending-content">
+                            <h4>Descoberta de gás natural no norte do país</h4>
+                            <p>Economia • 3 horas atrás</p>
+                        </div>
+                    </div>
+                    <div class="trending-item">
+                        <div class="trending-number">2</div>
+                        <div class="trending-content">
+                            <h4>Moçambique eleito melhor destino turístico de África</h4>
+                            <p>Turismo • 5 horas atrás</p>
+                        </div>
+                    </div>
+                    <div class="trending-item">
+                        <div class="trending-number">3</div>
+                        <div class="trending-content">
+                            <h4>Nova lei simplifica abertura de empresas</h4>
+                            <p>Política • 7 horas atrás</p>
+                        </div>
+                    </div>
+                    <div class="trending-item">
+                        <div class="trending-number">4</div>
+                        <div class="trending-content">
+                            <h4>Investimento estrangeiro cresce 15%</h4>
+                            <p>Economia • 9 horas atrás</p>
+                        </div>
+                    </div>
+                    <div class="trending-item">
+                        <div class="trending-number">5</div>
+                        <div class="trending-content">
+                            <h4>Seleção feminina de basquetebol qualifica-se para mundial</h4>
+                            <p>Desporto • 11 horas atrás</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="sidebar-section newsletter">
+                    <h3>Receba Notícias Diárias</h3>
+                    <p>Subscreva a nossa newsletter e receba as principais notícias no seu email</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="O seu email" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+
+                <!-- Ad Space -->
+                <div class="ad-sidebar">
+                    <p>Espaço para Anúncio Google AdSense (300x250)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Sobre MZ Now</h3>
+                    <p>O MZ Now é o portal de notícias mais completo de Moçambique, trazendo informação em tempo real sobre política, economia, desporto, entretenimento e muito mais.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="#">Início</a></li>
+                        <li><a href="#">Política</a></li>
+                        <li><a href="#">Economia</a></li>
+                        <li><a href="#">Desporto</a></li>
+                        <li><a href="#">Entretenimento</a></li>
+                        <li><a href="#">Tecnologia</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                        <li><a href="#">Política de Cookies</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Redes Sociais</h3>
+                    <p>Siga-nos nas redes sociais</p>
+                    <div style="margin-top: 15px; font-size: 1.5rem;">
+                        <a href="#" style="color: white; margin-right: 15px;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="color: white; margin-right: 15px;"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="color: white; margin-right: 15px;"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="color: white; margin-right: 15px;"><i class="fab fa-youtube"></i></a>
+                        <a href="#" style="color: white;"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 MZ Now - Todos os direitos reservados</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Admin Button -->
+    <button class="admin-btn" id="adminBtn">
+        <i class="fas fa-cog"></i>
+    </button>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-container">
+            <div class="admin-header">
+                <h2>Painel de Administração</h2>
+                <button class="close-admin" id="closeAdmin">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="dashboard">Dashboard</button>
+                <button class="admin-tab" data-tab="news">Notícias</button>
+                <button class="admin-tab" data-tab="ads">Anúncios</button>
+                <button class="admin-tab" data-tab="settings">Configurações</button>
+            </div>
+
+            <div class="tab-content active" id="dashboard">
+                <h3>Estatísticas do Site</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 20px 0;">
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center;">
+                        <h4>Visitantes Hoje</h4>
+                        <p style="font-size: 2rem; font-weight: bold; color: var(--primary);">1,248</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center;">
+                        <h4>Visualizações</h4>
+                        <p style="font-size: 2rem; font-weight: bold; color: var(--primary);">8,426</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center;">
+                        <h4>Notícias Publicadas</h4>
+                        <p style="font-size: 2rem; font-weight: bold; color: var(--primary);">42</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center;">
+                        <h4>Receita AdSense</h4>
+                        <p style="font-size: 2rem; font-weight: bold; color: var(--primary);">$124.50</p>
+                    </div>
+                </div>
+
+                <h3>Ações Rápidas</h3>
+                <div style="display: flex; gap: 15px; margin: 20px 0;">
+                    <button class="btn" onclick="showTab('news')">Adicionar Notícia</button>
+                    <button class="btn" onclick="showTab('ads')">Configurar Anúncios</button>
+                    <button class="btn">Ver Relatórios</button>
+                </div>
+            </div>
+
+            <div class="tab-content" id="news">
+                <h3>Gerir Notícias</h3>
+                
+                <form id="newsForm">
+                    <div class="form-group">
+                        <label for="newsTitle">Título da Notícia</label>
+                        <input type="text" id="newsTitle" placeholder="Digite o título da notícia" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="newsCategory">Categoria</label>
+                        <select id="newsCategory" required>
+                            <option value="">Selecione uma categoria</option>
+                            <option value="Política">Política</option>
+                            <option value="Economia">Economia</option>
+                            <option value="Desporto">Desporto</option>
+                            <option value="Entretenimento">Entretenimento</option>
+                            <option value="Tecnologia">Tecnologia</option>
+                            <option value="Saúde">Saúde</option>
+                            <option value="Educação">Educação</option>
+                            <option value="Ambiente">Ambiente</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="newsImage">URL da Imagem</label>
+                        <input type="text" id="newsImage" placeholder="https://exemplo.com/imagem.jpg">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="newsContent">Conteúdo da Notícia</label>
+                        <textarea id="newsContent" placeholder="Digite o conteúdo da notícia" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn">Publicar Notícia</button>
+                </form>
+                
+                <div class="news-list">
+                    <h4>Notícias Existentes</h4>
+                    
+                    <div class="news-item">
+                        <div class="news-item-info">
+                            <h4>Governo apresenta novo plano de desenvolvimento económico para 2024</h4>
+                            <p>Política • Publicado há 2 horas</p>
+                        </div>
+                        <div class="news-item-actions">
+                            <button class="btn">Editar</button>
+                            <button class="btn btn-danger">Excluir</button>
+                        </div>
+                    </div>
+                    
+                    <div class="news-item">
+                        <div class="news-item-info">
+                            <h4>Moçambique registou crescimento de 5.2% no último trimestre</h4>
+                            <p>Economia • Publicado há 4 horas</p>
+                        </div>
+                        <div class="news-item-actions">
+                            <button class="btn">Editar</button>
+                            <button class="btn btn-danger">Excluir</button>
+                        </div>
+                    </div>
+                    
+                    <div class="news-item">
+                        <div class="news-item-info">
+                            <h4>Seleção nacional vence jogo de preparação para o CAN</h4>
+                            <p>Desporto • Publicado há 6 horas</p>
+                        </div>
+                        <div class="news-item-actions">
+                            <button class="btn">Editar</button>
+                            <button class="btn btn-danger">Excluir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="ads">
+                <h3>Configurar Anúncios Google AdSense</h3>
+                
+                <div class="form-group">
+                    <label for="adClient">ID do Cliente AdSense</label>
+                    <input type="text" id="adClient" placeholder="ca-pub-XXXXXXXXXXXXXXXX">
+                </div>
+                
+                <div class="form-group">
+                    <label for="adSlotTop">ID do Slot (Topo)</label>
+                    <input type="text" id="adSlotTop" placeholder="XXXXXXXXXX">
+                </div>
+                
+                <div class="form-group">
+                    <label for="adSlotSidebar">ID do Slot (Barra Lateral)</label>
+                    <input type="text" id="adSlotSidebar" placeholder="XXXXXXXXXX">
+                </div>
+                
+                <div class="form-group">
+                    <label for="adSlotContent">ID do Slot (Meio do Conteúdo)</label>
+                    <input type="text" id="adSlotContent" placeholder="XXXXXXXXXX">
+                </div>
+                
+                <button class="btn">Salvar Configurações</button>
+                
+                <h4 style="margin-top: 30px;">Posições dos Anúncios</h4>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Topo da página (728x90)</li>
+                    <li>Barra lateral direita (300x250)</li>
+                    <li>Meio do conteúdo (728x90)</li>
+                    <li>Rodapé (728x90)</li>
+                </ul>
+            </div>
+
+            <div class="tab-content" id="settings">
+                <h3>Configurações do Site</h3>
+                
+                <div class="form-group">
+                    <label for="siteTitle">Título do Site</label>
+                    <input type="text" id="siteTitle" value="MZ Now">
+                </div>
+                
+                <div class="form-group">
+                    <label for="siteDescription">Descrição do Site</label>
+                    <textarea id="siteDescription">Portal de notícias de Moçambique em tempo real</textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="adminEmail">Email do Administrador</label>
+                    <input type="email" id="adminEmail" placeholder="admin@mznow.co.mz">
+                </div>
+                
+                <div class="form-group">
+                    <label for="postsPerPage">Notícias por Página</label>
+                    <select id="postsPerPage">
+                        <option value="6">6</option>
+                        <option value="9">9</option>
+                        <option value="12">12</option>
+                        <option value="15">15</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="enableComments"> Ativar Comentários
+                    </label>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="enableNewsletter" checked> Ativar Newsletter
+                    </label>
+                </div>
+                
+                <button class="btn">Salvar Configurações</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Admin Panel Functionality
+        const adminBtn = document.getElementById('adminBtn');
+        const adminPanel = document.getElementById('adminPanel');
+        const closeAdmin = document.getElementById('closeAdmin');
+        const adminTabs = document.querySelectorAll('.admin-tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        // Open Admin Panel
+        adminBtn.addEventListener('click', function() {
+            adminPanel.style.display = 'block';
+        });
+        
+        // Close Admin Panel
+        closeAdmin.addEventListener('click', function() {
+            adminPanel.style.display = 'none';
+        });
+        
+        // Close Admin Panel when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === adminPanel) {
+                adminPanel.style.display = 'none';
+            }
+        });
+        
+        // Tab Functionality
+        adminTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs and contents
+                adminTabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Show corresponding content
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Function to show specific tab
+        function showTab(tabName) {
+            adminTabs.forEach(t => t.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+            
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+        
+        // Newsletter Form
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            
+            // Simulate subscription
+            alert(`Obrigado por subscrever a nossa newsletter com o email: ${email}`);
+            this.reset();
+        });
+        
+        // News Form
+        document.getElementById('newsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('newsTitle').value;
+            const category = document.getElementById('newsCategory').value;
+            const image = document.getElementById('newsImage').value;
+            const content = document.getElementById('newsContent').value;
+            
+            // Simulate news creation
+            alert(`Notícia "${title}" publicada com sucesso na categoria ${category}!`);
+            this.reset();
+        });
+        
+        // Simulate real-time updates
+        setInterval(function() {
+            const ticker = document.querySelector('.breaking-news-ticker');
+            const originalText = ticker.textContent;
+            const words = originalText.split(' • ');
+            
+            // Rotate the ticker text
+            const firstWord = words.shift();
+            words.push(firstWord);
+            ticker.textContent = words.join(' • ');
+        }, 5000);
+        
+        // Simulate loading more news
+        window.addEventListener('scroll', function() {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+                // In a real app, this would load more news
+                console.log('Carregando mais notícias...');
+            }
+        });
+    </script>
+</body>
+</html>
