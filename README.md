@@ -4,7 +4,7 @@ Site de notícias sobre Moçambique, trazendo as últimas novidades de política
 
 # Como visualizar o site
 
-1. Acesse: https://orlando362.github.io/Projeto-35-MZ-Agora/
+1. Acesse: http://localhost:8158/primary:Meu%20Site/index.html#
 2. Ou baixe os arquivos e abra `index.html` no seu navegador
 
 # Tecnologias utilizadas
